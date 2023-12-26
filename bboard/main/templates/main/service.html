@@ -1,18 +1,25 @@
-{% for product in products %}
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">Название: {{ product.title }}</h5>
-            <p class="card-text">Описание: {{ product.description }}</p>
-            {% if product.image %}
-                <p>Фото: <img class="img" src="{{ product.image.url }}" width="500"></p>
-            {% else %}
-                <p>Фото не загружено</p>
-            {% endif %}
-            <!-- Add the form for ordering the product here -->
-            <form method="post" action="{% url 'main:order_product' pk=product.pk %}">
-                {% csrf_token %}
-                <button type="submit">Заказать товар</button>
-            </form>
+{% extends 'main/base.html' %}
+
+{% block title %}<title>Сервис</title>{% endblock %}
+
+{% block content %}
+    <h1>Список товаров</h1>
+
+    {% for product in products %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Название: {{ product.title }}</h5>
+                <p class="card-text">Описание: {{ product.description }}</p>
+                {% if product.image %}
+                    <p>Фото: <img class="img" src="{{ product.image.url }}" width="500"></p>
+                {% else %}
+                    <p>Фото не загружено</p>
+                {% endif %}
+                <form method="post" action="{% url 'main:order_product' pk=product.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Заказать товар</button>
+                </form>
+            </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+{% endblock %}
