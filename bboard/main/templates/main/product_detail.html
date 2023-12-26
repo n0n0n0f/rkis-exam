@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ product.title }}</h2>
+    <img src="{{ product.image.url }}" alt="{{ product.title }}">
+    <p>{{ product.description }}</p>
+
+    <!-- Добавление кнопки "Заказать товар" -->
+    <form method="post" action="{% url 'main:order_product' product.id %}">
+        {% csrf_token %}
+        <button type="submit">Заказать товар</button>
+    </form>
+{% endblock %}

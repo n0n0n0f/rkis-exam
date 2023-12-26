@@ -1,0 +1,42 @@
+<!-- main/templates/main/profile.html -->
+{% extends 'main/base.html' %}
+
+{% block title %}<title>Профиль</title>{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Профиль пользователя: {{ user.username }}</h2>
+        {% if user.userprofile.avatar %}
+          <p><img class="img" src="{{ user.userprofile.avatar.url }}" width="100"></p>
+        {% else %}
+          <p>Фото не загружено</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-12">
+        <h3>Заказанные товары:</h3>
+        {% if orders %}
+          {% for order in orders %}
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Название: {{ order.product.title }}</h5>
+                <p class="card-text">Описание: {{ order.product.description }}</p>
+                {% if order.product.image %}
+                  <p>Фото: <img class="img" src="{{ order.product.image.url }}" width="100"></p>
+                {% else %}
+                  <p>Фото не загружено</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>У пользователя ещё нет заказов!</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

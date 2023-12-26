@@ -1,0 +1,19 @@
+.root {
+   font-size: larger;
+}
+
+.navbar-brand {
+   font-size: 1.5rem;
+}
+
+.navbar-toggler {
+   padding: 0.25rem 0.75rem;
+}
+
+.navbar-nav .nav-link {
+   padding-right: 1rem;
+}
+
+.search-form {
+   width: 300px;
+}

@@ -1,0 +1,67 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'application/style.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='slim' %}
+    <title>{% block title %} Главная {% endblock %}</title>
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'main:home' %}">Название сайта-визитки</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-md-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Разделы</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'main:service'%}" >Товары и услуги</a>
+<!--                        <div class="dropdown-divider"></div>-->
+<!--                        <a class="dropdown-item" href="" >Контакты</a>-->
+<!--                    </div>-->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:logout' %}">Выход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:profile' %}">Профиль</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:register' %}">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:login' %}">Вход</a>
+                </li>
+                {% endif %}
+                <li class="nav-item search-form">
+                    <form method="GET" action="{% url 'main:service' %}" class="form-inline my-2 my-lg-0">
+                        {% csrf_token %}
+                        <input class="form-control mr-sm-2" type="text" name="q" placeholder="Поиск" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Искать</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="row">
+        <nav class="col-md-auto nav flex-column">
+            <a class="nav-link root" href="{% url 'main:home' %}">Главная</a>
+        </nav>
+        <div class="container">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
